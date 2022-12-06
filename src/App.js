@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 // import Button from "./Button.js";
 import "./index.css"; 
+import Rating from "./rate";
 
 
 function App() {
@@ -42,10 +43,13 @@ function App() {
         <div className="col"> 
             <h2 className = "my-5"> Progress: {( (progress - (days - count)) / progress )  * 100}% </h2>   
         </div>
-
-
       </div>
+      {/* rating part of strak */}
+      <Rating/>
     </div>
+
+      
+
   </div>);
 }
 
