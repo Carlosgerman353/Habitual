@@ -167,10 +167,6 @@ function App() {
     </div>
 
       
-
-  </div>);
-    </div> 
-    
     <div className="card text-center my-5"> 
       <div className = "card-body row"> 
         <h1>Goal Status</h1>  
