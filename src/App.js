@@ -24,6 +24,32 @@ function App() {
     CheckGoal();
   }   
 
+
+  async function getMakeHabit(habit_id){
+    let url = `localhost:3001/habit_info?id=${habit_id}`;
+    // useEffect(() => {
+      let res = await fetch(url)
+      let data = await res.json();
+      return data.makeHabit;
+    // }, []);
+  }
+  
+  async function getBreakHabit(habit_id){
+    let url = `localhost:3001/habit_info?id=${habit_id}`;
+    // useEffect(() => {
+      let res = await fetch(url)
+      let data = await res.json();
+      return data.breakHabit;
+    // }, []);
+  }
+  function getHabitMake(id=0){ //we want this function to fetch from DB and return makeHabit data
+    return "Jog Every Day";
+    //remove after we use the db based functions
+  }
+  function getHabitBreak(id=0){ //we want this function to fetch from DB and return breakHabit data
+    return "Eating junk food everyday";
+   //remove after we use the db based functions
+  }
   function logCheck() { 
     if (logged == 0 && days != 0) {
       return (<button className = "btn btn-success mx-3"
@@ -76,15 +102,16 @@ function App() {
     }
   }
   
-  return (<div className = "container">
+  return (
+    <div className = "container">
     <div className="card text-center my-5"> 
       <div className = "card-body row"> 
         
         <h1>Habits Progress</h1>   
         <h1>{logged}</h1> 
 
-        <h2> <strong className="text-success"> MAKE:</strong> Jog <em> every Day </em> </h2> 
-        <h2> <strong className="text-danger"> BREAK:</strong> Eating Junk Food <em> every Day </em> </h2>
+        <h2> <strong className="text-success"> MAKE:</strong> {getHabitMake(0)} </h2> 
+        <h2> <strong className="text-danger"> BREAK:</strong> {getHabitBreak(0)} </h2>
 
         {/* Streak Display */}
         <div className="col"> 
@@ -135,29 +162,29 @@ function App() {
 
 export default App;
 
-// export default function App() {
-//   const [count, setCount] = useState(0);
+/*export default function App() {
+  const [count, setCount] = useState(0);
 
-//   let incrementCount = () => {
-//     setCount(count + 1);
-//   };
+  let incrementCount = () => {
+    setCount(count + 1);
+  };
 
-//   let decrementCount = () => {
-//     setCount(count - 1);
-//   };
+  let decrementCount = () => {
+    setCount(count - 1);
+  };
 
-//   return (
-//     <div className="app">
-//       <div>
-//         <div class="count">
-//           <h3>Count:</h3>
-//           <h1>{count}</h1>
-//         </div>
-//         <div class="buttons">
-//           <Button title={"-"} action={decrementCount} />
-//           <Button title={"+"} action={incrementCount} />
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
+  return (
+    <div className="app">
+      <div>
+        <div class="count">
+          <h3>Count:</h3>
+          <h1>{count}</h1>
+        </div>
+        <div class="buttons">
+          <Button title={"-"} action={decrementCount} />
+          <Button title={"+"} action={incrementCount} />
+        </div>
+      </div>
+    </div>
+  );
+}*/
