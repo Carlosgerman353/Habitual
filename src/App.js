@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 // import Button from "./Button.js";
 import "./index.css"; 
+import Rating from "./rate";
 
 
 function App() {
 
 
-  const [count, setCount] = useState(0); 
+  const [count, setCount] = useState(0); //Streak count 
+  var [highestCount, setHighestCount] = useState(0);
   const [days, setDays] = useState(10);   
   const [initDays] = useState(days);
   var [progress, setProgress] = useState(0); //Sets progress equal to INITIAL value of days   
@@ -51,7 +53,7 @@ function App() {
    //remove after we use the db based functions
   }
   function logCheck() { 
-    if (logged == 0 && days != 0) {
+    if (logged === 0 && days !== 0) {
       return (<button className = "btn btn-success mx-3"
             onClick={() => Log() }
             > Log </button>);
@@ -68,7 +70,7 @@ function App() {
       setDays(days - 1);
     } 
 
-    if (logged == 0) {
+    if (logged === 0) {
       setCount(0);
     }  
 
@@ -80,13 +82,15 @@ function App() {
     setDays(initDays); 
     setProgress(0); 
     CheckGoal(); 
-    setLogged(0);
+    setLogged(0); 
+    setHighestCount(0);
+
   } 
 
   function CheckGoal() { 
 
-    if (days == 0) {
-      if (progress == initDays) {
+    if (days === 0) {
+      if (progress === initDays) {
         goalMet = true; 
         return <p className="text-success"> Met </p>;
       } 
@@ -100,6 +104,23 @@ function App() {
     else {
       return <p className="text-primary"> In Progress </p>;
     }
+  } 
+
+  function CheckStreak() {
+    if (count > highestCount) {
+      setHighestCount(count);
+    } 
+
+    return highestCount;
+  } 
+
+  function calcKarma() {
+    var score = 0; 
+
+    score += (highestCount * 50); 
+    score += ((progress / initDays)  * 100) * 3; 
+
+    return score;
   }
   
   return (
@@ -140,19 +161,25 @@ function App() {
         <div className="col"> 
             <h2 className = "my-5"> Progress: { (progress / initDays)  * 100}% </h2>   
         </div>
-
-
       </div>
+      {/* rating part of strak */}
+      <Rating/>
+    </div>
+
+      
+
+  </div>);
     </div> 
     
     <div className="card text-center my-5"> 
       <div className = "card-body row"> 
         <h1>Goal Status</h1>  
         <h2> {CheckGoal()} </h2> 
-         {/*Highest Streak Checker/Function  */} 
-         <h1> Highest Streak: {('num')} </h1>  
-         <h1> Total Progress: {('num')} </h1>
-         <h1> KARMA Earned: {('num')} </h1>
+         {/*Only show this once goal is complete */}  
+     
+         <h1> Highest Streak: {CheckStreak()} </h1>  
+         <h1> Total Progress: {progress} </h1>
+         <h1> KARMA Earned: {calcKarma()} </h1>
       </div>
     </div>
 
