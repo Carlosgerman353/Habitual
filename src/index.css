@@ -11,3 +11,12 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* hides radio buttons */
+input[type="radio"] {
+  display: none;
+}
+
+.mark {
+  cursor: pointer;
+}
