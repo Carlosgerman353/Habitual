@@ -1,10 +1,9 @@
-import React, { useState } from "react";
-// import Button from "./Button.js";
+import React, { useState, useEffect } from "react";
+import Button from "./Button.js";
 import "./index.css"; 
 
 
 function App() {
-
 
   const [count, setCount] = useState(0); 
   const [days, setDays] = useState(10);   
@@ -23,6 +22,24 @@ function App() {
 
     CheckGoal();
   }   
+
+  async function getMakeHabit(habit_id){
+    let url = `localhost:3001/habit_info?id=${habit_id}`;
+    // useEffect(() => {
+      let res = await fetch(url)
+      let data = await res.json();
+      return data.makeHabit;
+    // }, []);
+  }
+  
+  async function getBreakHabit(habit_id){
+    let url = `localhost:3001/habit_info?id=${habit_id}`;
+    // useEffect(() => {
+      let res = await fetch(url)
+      let data = await res.json();
+      return data.breakHabit;
+    // }, []);
+  }
 
   function logCheck() { 
     if (logged == 0 && days != 0) {
@@ -45,7 +62,6 @@ function App() {
     if (logged == 0) {
       setCount(0);
     }  
-
     setLogged(0);
   }
 
@@ -135,29 +151,29 @@ function App() {
 
 export default App;
 
-// export default function App() {
-//   const [count, setCount] = useState(0);
+/*export default function App() {
+  const [count, setCount] = useState(0);
 
-//   let incrementCount = () => {
-//     setCount(count + 1);
-//   };
+  let incrementCount = () => {
+    setCount(count + 1);
+  };
 
-//   let decrementCount = () => {
-//     setCount(count - 1);
-//   };
+  let decrementCount = () => {
+    setCount(count - 1);
+  };
 
-//   return (
-//     <div className="app">
-//       <div>
-//         <div class="count">
-//           <h3>Count:</h3>
-//           <h1>{count}</h1>
-//         </div>
-//         <div class="buttons">
-//           <Button title={"-"} action={decrementCount} />
-//           <Button title={"+"} action={incrementCount} />
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
+  return (
+    <div className="app">
+      <div>
+        <div class="count">
+          <h3>Count:</h3>
+          <h1>{count}</h1>
+        </div>
+        <div class="buttons">
+          <Button title={"-"} action={decrementCount} />
+          <Button title={"+"} action={incrementCount} />
+        </div>
+      </div>
+    </div>
+  );
+}*/
