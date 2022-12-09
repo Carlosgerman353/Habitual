@@ -128,8 +128,9 @@ function App() {
       return ( 
       <div>
         <h1> Highest Streak: {CheckStreak()} </h1>  
-        <h1> Total Progress: {progress} </h1>
-        <h1> KARMA Earned: {calcKarma()} </h1>
+        <h1> Total Progress: {progress * 10}% </h1> 
+        <h1> KARMA Earned: {calcKarma()} </h1> 
+        <Rating/> 
       </div>
       );
     }
@@ -137,20 +138,39 @@ function App() {
   
   return (
     <div className = "container">
-    <div className="card text-center my-5"> 
+    <div className="card text-center my-5 border border-dark"> 
       <div className = "card-body row"> 
         
-        <h1>Habits Progress</h1>   
-        <h1>{logged}</h1> 
-
-        <h2> <strong className="text-success"> MAKE:</strong> {getHabitMake(0)} </h2> 
-        <h2> <strong className="text-danger"> BREAK:</strong> {getHabitBreak(0)} </h2>
+        <h1 class="pb-5 fw-bold">Habits Progress</h1>   
+        {/* <h1>{logged}</h1>  */} 
+            <h2> <strong className="text-success"> MAKE:</strong> {getHabitMake(0)} </h2> 
+            <h2> <strong className="text-danger"> BREAK:</strong> {getHabitBreak(0)} </h2>
+         
+        
+        
 
         {/* Streak Display */}
         <div className="col"> 
-            <h2 className = "my-5"> Streak x {count} </h2>  
-            
-            {/* Increase Count */} 
+            <h2 className = "my-5 fw-bold text-warning"> Streak  </h2>   
+            <h2> x {count}</h2>
+        </div>  
+
+        {/* Days Display */}
+        <div className="col"> 
+            <h2 className = "my-5 fw-bold"> Days Left </h2>    
+            <h2> {days} </h2>
+        </div> 
+
+        {/* Progress Display */}
+        <div className="col"> 
+            <h2 className = "my-5 fw-bold text-info"> Progress </h2>   
+            <h2> { (progress / initDays)  * 100}% </h2> 
+        </div>
+      </div>
+      {/* rating part of strak */} 
+
+      <div class="p-3">
+        {/* Increase Count */} 
             {/* Possibly change functionality, so that logging can only be done ONCE per day */}
             {logCheck()}  
 
@@ -162,27 +182,15 @@ function App() {
             {/* Reset Count (for testing purposes) */}
             <button className = "btn btn-danger mx-3"
             onClick={() => Reset() }> Reset </button>
-        </div>  
-
-        {/* Days Display */}
-        <div className="col"> 
-            <h2 className = "my-5"> Days Left x {days} </h2>   
-        </div> 
-
-        {/* Progress Display */}
-        <div className="col"> 
-            <h2 className = "my-5"> Progress: { (progress / initDays)  * 100}% </h2>   
-        </div>
       </div>
-      {/* rating part of strak */}
-      <Rating/>
+      
     </div>
 
       
     <div className="card text-center my-5"> 
-      <div className = "card-body row"> 
-        <h1>Goal Status</h1>  
-        <h2> {CheckGoal()} </h2> 
+      <div className = "card-body row border border-dark"> 
+        <h1 class="pb-5 fw-bold">Goal Status</h1>  
+        <h2 class="fw-bold"> {CheckGoal()} </h2> 
      
         <div>
             {endStats()}
