@@ -12,7 +12,7 @@ function App() {
   const [days, setDays] = useState(10);   
   const [initDays] = useState(days);
   var [progress, setProgress] = useState(0); //Sets progress equal to INITIAL value of days   
-  var [goalMet] = useState(0); 
+  // var [goalMet, setGoalMet] = useState(0); 
   var [logged, setLogged] = useState(0);
 
   function Log() {
@@ -23,7 +23,7 @@ function App() {
       setProgress(progress + 1);
     } 
 
-    CheckGoal();
+    CheckGoal(0);
   }   
 
 
@@ -91,12 +91,12 @@ function App() {
 
     if (days === 0) {
       if (progress === initDays) {
-        goalMet = true; 
+        // setGoalMet(true);
         return <p className="text-success"> Met </p>;
       } 
   
       else {
-        goalMet = false; 
+        // setGoalMet(false); 
         return <p className="text-danger"> Not Met </p>;
       }
     } 
@@ -121,6 +121,18 @@ function App() {
     score += ((progress / initDays)  * 100) * 3; 
 
     return score;
+  } 
+
+  function endStats() {
+    if(days === 0) {
+      return ( 
+      <div>
+        <h1> Highest Streak: {CheckStreak()} </h1>  
+        <h1> Total Progress: {progress} </h1>
+        <h1> KARMA Earned: {calcKarma()} </h1>
+      </div>
+      );
+    }
   }
   
   return (
@@ -171,11 +183,10 @@ function App() {
       <div className = "card-body row"> 
         <h1>Goal Status</h1>  
         <h2> {CheckGoal()} </h2> 
-         {/*Only show this once goal is complete */}  
      
-         <h1> Highest Streak: {CheckStreak()} </h1>  
-         <h1> Total Progress: {progress} </h1>
-         <h1> KARMA Earned: {calcKarma()} </h1>
+        <div>
+            {endStats()}
+         </div> 
       </div>
     </div>
 
@@ -185,29 +196,3 @@ function App() {
 
 export default App;
 
-/*export default function App() {
-  const [count, setCount] = useState(0);
-
-  let incrementCount = () => {
-    setCount(count + 1);
-  };
-
-  let decrementCount = () => {
-    setCount(count - 1);
-  };
-
-  return (
-    <div className="app">
-      <div>
-        <div class="count">
-          <h3>Count:</h3>
-          <h1>{count}</h1>
-        </div>
-        <div class="buttons">
-          <Button title={"-"} action={decrementCount} />
-          <Button title={"+"} action={incrementCount} />
-        </div>
-      </div>
-    </div>
-  );
-}*/

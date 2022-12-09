@@ -1,6 +1,6 @@
 import React, { useState} from 'react'
 import { FaStar} from "react-icons/fa";
-
+// Remember to install icons on your device: npm install react-icons --save 
 const Rating = () => {
     const [rating, setRating] = useState(null);
     const [hover, setHover] = useState(null);
