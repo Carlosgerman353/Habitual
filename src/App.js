@@ -2,11 +2,10 @@ import React, { useState } from "react";
 // import Button from "./Button.js";
 import "./index.css"; 
 import Rating from "./rate";
+import NavBar from "./NavBar"
 
 
 function App() {
-
-
   const [count, setCount] = useState(0); //Streak count 
   var [highestCount, setHighestCount] = useState(0);
   const [days, setDays] = useState(10);   
@@ -24,7 +23,8 @@ function App() {
     } 
 
     CheckGoal(0);
-  }   
+    }   
+
 
 
   async function getMakeHabit(habit_id){
@@ -137,15 +137,21 @@ function App() {
   }
   
   return (
+    <>
+  <NavBar />
+    <div id="main">
     <div className = "container">
-    <div className="card text-center my-5 border border-dark"> 
-      <div className = "card-body row"> 
-        
-        <h1 class="pb-5 fw-bold">Habits Progress</h1>   
-        {/* <h1>{logged}</h1>  */} 
+    <div id="makeBreakBox">
             <h2> <strong className="text-success"> MAKE:</strong> {getHabitMake(0)} </h2> 
             <h2> <strong className="text-danger"> BREAK:</strong> {getHabitBreak(0)} </h2>
-         
+    </div>
+    <div className="card text-center my-5 border border-dark"> 
+
+      <div className = "card-body row"> 
+          
+        <h1 className="pb-5 fw-bold">Habits Progress</h1>   
+        {/* <h1>{logged}</h1>  */} 
+
         
         
 
@@ -169,7 +175,7 @@ function App() {
       </div>
       {/* rating part of strak */} 
 
-      <div class="p-3">
+      <div className="p-3">
         {/* Increase Count */} 
             {/* Possibly change functionality, so that logging can only be done ONCE per day */}
             {logCheck()}  
@@ -189,8 +195,8 @@ function App() {
       
     <div className="card text-center my-5"> 
       <div className = "card-body row border border-dark"> 
-        <h1 class="pb-5 fw-bold">Goal Status</h1>  
-        <h2 class="fw-bold"> {CheckGoal()} </h2> 
+        <h1 className="pb-5 fw-bold">Goal Status</h1>  
+        <h2 className="fw-bold"> {CheckGoal()} </h2> 
      
         <div>
             {endStats()}
@@ -199,7 +205,10 @@ function App() {
     </div>
 
 
-  </div>); //End of return
+  </div>
+  </div>
+
+  </>); //End of return
 }
 
 export default App;
