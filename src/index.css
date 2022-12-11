@@ -12,7 +12,7 @@ code {
     monospace;
 }
 
-
+#hamburger-expand-btn{ width: fit-content }
 input[type="radio"] {
   display: none;
 }
@@ -41,21 +41,39 @@ input[type="radio"] {
   font-size: 25px;
   color: #818181;
   display: block;
+  width: 250px;
   transition: 0.3s;
 }
-
+.sidenav a:first-child{
+  margin-top:50px;
+}
 
 .sidenav a:hover {
 	color: #f1f1f1;
 }
 
-
+.sidenav input{
+  padding: 8px 8px 8px 32px;
+  display: block;
+  width: 250px;
+}
 .sidenav .closebtn {
   position: absolute;
   top: 0;
   right: 25px;
   font-size: 36px;
   margin-left: 50px;
+  border: none;
+  background-color: rgb(205, 74, 74);
+}
+.addBtn {
+  position: absolute;
+  top: 0;
+  /* right: 25px; */
+  font-size: 36px;
+  margin-left: 20px;
+  background-color: #198754;
+  border: none;
 }
 
 
@@ -73,3 +91,28 @@ input[type="radio"] {
   color: #f1f1f1 !important;
   background-color: #5d7d5b;
 }
+#allList { padding:0;}
+#allList > li {
+  border: 3px solid rgb(112, 187, 198);
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.5em;
+  flex-grow: 1;
+  flex-wrap: wrap;
+  padding: 1.5em;
+}
+#mkHb {
+  justify-content: flex-start;
+  font-weight: 600;
+  padding-left: 5px;
+  border-left: 5px solid rgb(172, 68, 68);
+}
+li * {
+  flex-grow: 1;
+}
+#allList {
+  display: flex;
+  flex-direction: column;
+}
+h3 >b{color:rgb(43, 127, 90);}

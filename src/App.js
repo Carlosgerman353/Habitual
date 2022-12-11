@@ -1,9 +1,23 @@
 import React, { useState } from "react";
+import ReactDOM from "react-dom";
 // import Button from "./Button.js";
 import "./index.css"; 
 import Rating from "./rate";
-import NavBar from "./NavBar"
+import NavBar from "./NavBar";
+import Profile from "./Profile";
+import CreateNewHabit from "./CreateNewHabit";
 
+//[habit_id, makeHabit, breakHabit]
+const habitDB = [
+  [100, "Jog everyday", "Daily junk food"],
+  [101, "50 pushups daily", "idling away time"],
+  [102, "3 miles running", "improve cardio endurance"]
+  ];
+  habitDB.push([0, "Profile"]);
+
+let urlParams = new URLSearchParams(document.URL.toString().split("?")[1]);
+const habitInx = habitDB.findIndex(x => x[0] === parseInt(urlParams.get("habit_id")));
+const currHabit1 = habitInx === -1 ? habitDB[0] : habitDB[habitInx];
 
 function App() {
   const [count, setCount] = useState(0); //Streak count 
@@ -13,6 +27,7 @@ function App() {
   var [progress, setProgress] = useState(0); //Sets progress equal to INITIAL value of days   
   // var [goalMet, setGoalMet] = useState(0); 
   var [logged, setLogged] = useState(0);
+  const [currHabit, setCurrHabit] = useState(currHabit1);
 
   function Log() {
     setCount(count + 1);  
@@ -25,33 +40,38 @@ function App() {
     CheckGoal(0);
     }   
 
+function createHabit(makeHabit){
+    ReactDOM.render(
+      <CreateNewHabit makeHabit={makeHabit} />
+    );
+}
 
 
-  async function getMakeHabit(habit_id){
-    let url = `localhost:3001/habit_info?id=${habit_id}`;
-    // useEffect(() => {
-      let res = await fetch(url)
-      let data = await res.json();
-      return data.makeHabit;
-    // }, []);
-  }
+  // async function getMakeHabit(habit_id){
+  //   // let url = `localhost:3001/habit_info?id=${habit_id}`;
+  //   // // useEffect(() => {
+  //   //   let res = await fetch(url)
+  //   //   let data = await res.json();
+  //   //   return data.makeHabit;
+  //   // }, []);
+  // }
   
-  async function getBreakHabit(habit_id){
-    let url = `localhost:3001/habit_info?id=${habit_id}`;
-    // useEffect(() => {
-      let res = await fetch(url)
-      let data = await res.json();
-      return data.breakHabit;
-    // }, []);
-  }
-  function getHabitMake(id=0){ //we want this function to fetch from DB and return makeHabit data
-    return "Jog Every Day";
-    //remove after we use the db based functions
-  }
-  function getHabitBreak(id=0){ //we want this function to fetch from DB and return breakHabit data
-    return "Eating junk food everyday";
-   //remove after we use the db based functions
-  }
+  // async function getBreakHabit(habit_id){
+  //   // let url = `localhost:3001/habit_info?id=${habit_id}`;
+  //   // // useEffect(() => {
+  //   //   let res = await fetch(url)
+  //   //   let data = await res.json();
+  //   //   return data.breakHabit;
+  //   // }, []);
+  // }
+  // function getHabitMake(hId){ //we want this function to fetch from DB and return makeHabit data
+  //   return currHabit[1];
+  //   //remove after we use the db based functions
+  // }
+  // function getHabitBreak(hId){ //we want this function to fetch from DB and return breakHabit data
+    
+  //  //remove after we use the db based functions
+  // }
   function logCheck() { 
     if (logged === 0 && days !== 0) {
       return (<button className = "btn btn-success mx-3"
@@ -135,15 +155,20 @@ function App() {
       );
     }
   }
-  
+
+//if is in profile page then render profile component only
+  if(currHabit1[1].toLowerCase() === "profile"){
+    return <Profile />;
+  }
+
   return (
     <>
   <NavBar />
     <div id="main">
     <div className = "container">
     <div id="makeBreakBox">
-            <h2> <strong className="text-success"> MAKE:</strong> {getHabitMake(0)} </h2> 
-            <h2> <strong className="text-danger"> BREAK:</strong> {getHabitBreak(0)} </h2>
+            <h2> <strong className="text-success"> MAKE:</strong> {currHabit[1]} </h2> 
+            <h2> <strong className="text-danger"> BREAK:</strong> {currHabit[2]} </h2>
     </div>
     <div className="card text-center my-5 border border-dark"> 
 

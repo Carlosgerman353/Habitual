@@ -1,46 +1,56 @@
 import React, { useState } from "react";
 import "./index.css"; 
-  
+import createHabit from "./App";
 
-  const habitDB = [
-  [100, "Jog everyday"],
-  [101, "50 pushups daily"],
-  [102, "3 miles running"]
-  ];
+const habitDB = [
+    [100, "Jog everyday", "Daily junk food"],
+    [101, "50 pushups daily", "idling away time"],
+    [102, "3 miles running", "improve cardio endurance"]
+    ];
+
+  habitDB.push([0, "Profile"]);
 
 function openNav() {
     document.getElementById("mySidenav").style.width = "250px";
-    // document.getElementById("mySidenav").style.color = "#818181 !important";
     document.getElementById("main").style.marginLeft = "250px";
 }
 function closeNav() {
     document.getElementById("main").style.marginLeft = "0";
-    // document.getElementById("mySidenav").style.color = "rgba(0,0,0,0) !important";
     document.getElementById("mySidenav").style.width = "0";
 } 
-// function setNavLinks(){
-// let a = 0;
-// let navLinks1 = []; 
-// habitTitle.forEach(x => {
-//         navLinks1.push(<a href={"habit?habit_id="+habitDB[a++]}>{x}</a>); 
-// });
-// navLinks1.forEach(x => console.log(x));
-// }
-const currHabit1 = [100, "Jog daily"];
+
+let urlParams = new URLSearchParams(document.URL.toString().split("?")[1]);
+const habitInx = habitDB.findIndex(x => x[0] === parseInt(urlParams.get("habit_id")));
+
+const currHabit1 = (habitInx === -1 ) ? habitDB[0] : habitDB[habitInx]; //stores whatever page we currently on
 
 // setNavLinks();
 export default function NavBar(props) {
-
 const [navLinks, setNavLinks] = useState(habitDB);
 const [currHabit, setCurrHabit] = useState(currHabit1);
+
+function addNewTask(){
+    let ina = document.createElement("input");
+    ina.placeholder = "new name here";
+    document.querySelector("#navHabitList").insertBefore(ina, document.querySelector("#navHabitList").children[document.querySelector("#navHabitList").childElementCount - 1]);
+    window.onkeydown = (e) => {
+        console.log(e.key);
+        if(e.key === "Enter"){
+            console.log(ina.value);
+            createHabit(ina.value);
+        }
+    }
+}
     return (
         <>
         <div id="mySidenav" className="sidenav">
+            <button className="addBtn" onClick={() => addNewTask()}>+</button>
             <button className="closebtn" onClick={() => closeNav()}>&times;</button>
             <div id="navHabitList">
                 {
                     navLinks.map(h => (
-                        <a key={h[0]} className={h[0] !== currHabit[0] ? "inactive":"active currHabit"} href={"habit?habit_id="+h[0]}>{h[1]}</a>
+                        //if not current habit then class=inactive else class="active currHabit"
+                        <a key={h[0]} className={(h[0] !== currHabit[0] /*&& h[0] !== 0*/) ? "inactive" : "active currHabit"} href={h[0] !== 22 ? "habit?habit_id="+h[0] : "/profile"}>{h[1]}</a> //if 22 is set to 0 then the href for profile will be /profile
                         )
                     )
                 }
