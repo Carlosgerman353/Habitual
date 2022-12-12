@@ -28,12 +28,16 @@ const currHabit1 = (habitInx === -1 ) ? habitDB[0] : habitDB[habitInx]; //stores
 export default function NavBar(props) {
 const [navLinks, setNavLinks] = useState(habitDB);
 const [currHabit, setCurrHabit] = useState(currHabit1);
+const [newHabitInput, setNewHabitInput] = useState(false);
 
 function addNewTask(){
-    let ina = document.createElement("input");
-    ina.id = "new-in-val";
-    ina.placeholder = "new name here";
-    document.querySelector("#navHabitList").insertBefore(ina, document.querySelector("#navHabitList").children[document.querySelector("#navHabitList").childElementCount - 1]);
+    if(!newHabitInput){
+        let ina = document.createElement("input");
+        ina.id = "new-in-val";
+        ina.placeholder = "new name here";
+        document.querySelector("#navHabitList").insertBefore(ina, document.querySelector("#navHabitList").children[document.querySelector("#navHabitList").childElementCount - 1]);
+        setNewHabitInput(true);
+    }
 }
     return (
         <>
