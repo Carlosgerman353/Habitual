@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import ReactDOM from "react-dom";
 // import Button from "./Button.js";
 import "./index.css"; 
 import Rating from "./rate";
@@ -7,6 +6,8 @@ import NavBar from "./NavBar";
 import Profile from "./Profile";
 import CreateNewHabit from "./CreateNewHabit";
 
+
+var ReactDOM = require('react-dom/client');
 //[habit_id, makeHabit, breakHabit]
 const habitDB = [
   [100, "Jog everyday", "Daily junk food"],
@@ -19,6 +20,7 @@ let urlParams = new URLSearchParams(document.URL.toString().split("?")[1]);
 const habitInx = habitDB.findIndex(x => x[0] === parseInt(urlParams.get("habit_id")));
 const currHabit1 = habitInx === -1 ? habitDB[0] : habitDB[habitInx];
 
+const cnHabit = urlParams.get("makeHabit");
 function App() {
   const [count, setCount] = useState(0); //Streak count 
   var [highestCount, setHighestCount] = useState(0);
@@ -28,7 +30,19 @@ function App() {
   // var [goalMet, setGoalMet] = useState(0); 
   var [logged, setLogged] = useState(0);
   const [currHabit, setCurrHabit] = useState(currHabit1);
+  const [newHabit, setNewHabit] = useState(cnHabit === null ? null : cnHabit);
 
+  window.onkeydown = (e) => {
+    // console.log(e.key);
+    if(e.key === "Enter"){
+        // console.log(ina.value);
+        createHabit(document.querySelector("#new-in-val").value);
+    }
+  }
+  function createHabit(makeHabit){
+    console.log(makeHabit+" is entered")
+    document.location.href = "http://"+document.location.host + "/create?makeHabit=" + makeHabit;
+  }
   function Log() {
     setCount(count + 1);  
     setLogged(1); 
@@ -40,11 +54,7 @@ function App() {
     CheckGoal(0);
     }   
 
-function createHabit(makeHabit){
-    ReactDOM.render(
-      <CreateNewHabit makeHabit={makeHabit} />
-    );
-}
+
 
 
   // async function getMakeHabit(habit_id){
@@ -155,14 +165,11 @@ function createHabit(makeHabit){
       );
     }
   }
-
-//if is in profile page then render profile component only
-  if(currHabit1[1].toLowerCase() === "profile"){
-    return <Profile />;
-  }
-
+  if(newHabit !== null) return <CreateNewHabit makeHabit={newHabit} />;
+  if(currHabit1[1].toLowerCase() === "profile") return <Profile />;
   return (
     <>
+    {/* { newHabit !== false && <CreateNewHabit makeHabit={newHabit} />} */}
   <NavBar />
     <div id="main">
     <div className = "container">

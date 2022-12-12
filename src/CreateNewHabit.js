@@ -7,7 +7,11 @@ export default function CreateNewHabit(props){
         <NavBar />
         <div id="main">
             <div id="container">
-                <h1>Make Habit: {props.makeHabit}</h1>
+                <form onsubmit="createNewHabit" id="createForm">
+                    <h1>Make Habit: <input name="makeHabit" value={props.makeHabit}></input></h1>
+                    <h1>Break Habit: <input name="breakHabit"></input></h1>
+                    
+                </form>
             </div>  
         </div>
         </>

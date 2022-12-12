@@ -31,15 +31,9 @@ const [currHabit, setCurrHabit] = useState(currHabit1);
 
 function addNewTask(){
     let ina = document.createElement("input");
+    ina.id = "new-in-val";
     ina.placeholder = "new name here";
     document.querySelector("#navHabitList").insertBefore(ina, document.querySelector("#navHabitList").children[document.querySelector("#navHabitList").childElementCount - 1]);
-    window.onkeydown = (e) => {
-        console.log(e.key);
-        if(e.key === "Enter"){
-            console.log(ina.value);
-            createHabit(ina.value);
-        }
-    }
 }
     return (
         <>

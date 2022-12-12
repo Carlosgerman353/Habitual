@@ -1,14 +1,15 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import "./index.css";
-
-// JS Imports
 import App from "./App"; 
 import Button from "./Button";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App /> 
-  </React.StrictMode>,
-  document.getElementById("root")
+var ReactDOM = require('react-dom/client');
+// JS Imports
+
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+<React.StrictMode>
+  <App /> 
+</React.StrictMode>
 );
