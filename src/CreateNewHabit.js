@@ -1,6 +1,9 @@
 import React, {useState} from "react";
 import NavBar from "./NavBar";
 
+function makeDbRequest(mh, bh, fdd){
+    console.log("writing to backend with data: ", mh, bh, fdd, "...");
+}
 
 export default function CreateNewHabit(props){
     const [mh, setMh] = useState(props.makeHabit);
@@ -13,9 +16,10 @@ export default function CreateNewHabit(props){
         setFdd(document.querySelector("#fdd").value);
       }
     function handleSubmit(event){
-        console.log(mh, bh, fdd);
-        
         //make request to DB/backend and refresh
+        makeDbRequest(mh, bh, fdd);
+        //document.location.href = `http://${document.location.host}`;
+
         event.preventDefault();
     }
     return (

@@ -53,6 +53,7 @@ input[type="radio"] {
 }
 
 .sidenav input{
+  font-size: 18px;
   padding: 8px 8px 8px 32px;
   display: block;
   width: 250px;
@@ -116,3 +117,4 @@ li * {
   flex-direction: column;
 }
 h3 >b{color:rgb(43, 127, 90);}
+

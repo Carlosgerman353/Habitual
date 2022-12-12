@@ -16,21 +16,36 @@ const habitDB = [
   ];
   habitDB.push([0, "Profile"]);
 
+  const habitDBJson = {
+    habitId100 : {
+        streak: 0,
+        days: 5
+    },
+    habitId0: {
+      streak:0,
+      days:0
+    }
+  };
+  let i = 101;
+  habitDBJson["habitId"+ i++]  = {streak: 0, days: 5};
+  habitDBJson["habitId"+ i++]  = {streak: 0, days: 5};
+
 let urlParams = new URLSearchParams(document.URL.toString().split("?")[1]);
 const habitInx = habitDB.findIndex(x => x[0] === parseInt(urlParams.get("habit_id")));
 const currHabit1 = habitInx === -1 ? habitDB[0] : habitDB[habitInx];
 
 const cnHabit = urlParams.get("makeHabit");
 function App() {
+  
+  const [currHabit, setCurrHabit] = useState(currHabit1);
   const [count, setCount] = useState(0); //Streak count 
   var [highestCount, setHighestCount] = useState(0);
-  const [days, setDays] = useState(10);   
+  const [days, setDays] = useState(habitDBJson["habitId"+currHabit[0]].days);
   const [initDays] = useState(days);
-  var [progress, setProgress] = useState(0); //Sets progress equal to INITIAL value of days   
+  var [progress, setProgress] = useState(0); //Sets progress equal to INITIAL value of days
   // var [goalMet, setGoalMet] = useState(0); 
   var [logged, setLogged] = useState(0);
-  const [currHabit, setCurrHabit] = useState(currHabit1);
-  const [newHabit, setNewHabit] = useState(cnHabit === null ? null : cnHabit);
+  const [newHabit, setNewHabit] = useState(cnHabit === null ? null : cnHabit); //var used to check if createNewHabit button is already clicked
 
   window.onkeydown = (e) => {
     // console.log(e.key);
@@ -54,42 +69,12 @@ function App() {
     CheckGoal(0);
     }   
 
-
-
-
-  // async function getMakeHabit(habit_id){
-  //   // let url = `localhost:3001/habit_info?id=${habit_id}`;
-  //   // // useEffect(() => {
-  //   //   let res = await fetch(url)
-  //   //   let data = await res.json();
-  //   //   return data.makeHabit;
-  //   // }, []);
-  // }
-  
-  // async function getBreakHabit(habit_id){
-  //   // let url = `localhost:3001/habit_info?id=${habit_id}`;
-  //   // // useEffect(() => {
-  //   //   let res = await fetch(url)
-  //   //   let data = await res.json();
-  //   //   return data.breakHabit;
-  //   // }, []);
-  // }
-  // function getHabitMake(hId){ //we want this function to fetch from DB and return makeHabit data
-  //   return currHabit[1];
-  //   //remove after we use the db based functions
-  // }
-  // function getHabitBreak(hId){ //we want this function to fetch from DB and return breakHabit data
-    
-  //  //remove after we use the db based functions
-  // }
   function logCheck() { 
     if (logged === 0 && days !== 0) {
       return (<button className = "btn btn-success mx-3"
             onClick={() => Log() }
             > Log </button>);
-    } 
-
-    else {
+    } else {
       return(<p></p>);
     }
     
@@ -114,7 +99,6 @@ function App() {
     CheckGoal(); 
     setLogged(0); 
     setHighestCount(0);
-
   } 
 
   function CheckGoal() { 
@@ -184,9 +168,6 @@ function App() {
         <h1 className="pb-5 fw-bold">Habits Progress</h1>   
         {/* <h1>{logged}</h1>  */} 
 
-        
-        
-
         {/* Streak Display */}
         <div className="col"> 
             <h2 className = "my-5 fw-bold text-warning"> Streak  </h2>   
@@ -202,7 +183,7 @@ function App() {
         {/* Progress Display */}
         <div className="col"> 
             <h2 className = "my-5 fw-bold text-info"> Progress </h2>   
-            <h2> { (progress / initDays)  * 100}% </h2> 
+            <h2> { Math.ceil((progress / initDays)  * 100)}% </h2> 
         </div>
       </div>
       {/* rating part of strak */} 

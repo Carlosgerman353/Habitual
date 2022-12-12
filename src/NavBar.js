@@ -17,6 +17,7 @@ function openNav() {
 function closeNav() {
     document.getElementById("main").style.marginLeft = "0";
     document.getElementById("mySidenav").style.width = "0";
+    if(document.querySelector("#new-in-val") !== undefined) document.querySelector("#new-in-val").remove();
 } 
 
 let urlParams = new URLSearchParams(document.URL.toString().split("?")[1]);
@@ -28,16 +29,17 @@ const currHabit1 = (habitInx === -1 ) ? habitDB[0] : habitDB[habitInx]; //stores
 export default function NavBar(props) {
 const [navLinks, setNavLinks] = useState(habitDB);
 const [currHabit, setCurrHabit] = useState(currHabit1);
-const [newHabitInput, setNewHabitInput] = useState(false);
+// const [newHabitInput, setNewHabitInput] = useState(false);
 
 function addNewTask(){
-    if(!newHabitInput){
+    // if(!newHabitInput){
         let ina = document.createElement("input");
         ina.id = "new-in-val";
         ina.placeholder = "new name here";
         document.querySelector("#navHabitList").insertBefore(ina, document.querySelector("#navHabitList").children[document.querySelector("#navHabitList").childElementCount - 1]);
-        setNewHabitInput(true);
-    }
+        ina.focus();
+        // setNewHabitInput(true);
+    // }
 }
     return (
         <>
@@ -48,7 +50,7 @@ function addNewTask(){
                 {
                     navLinks.map(h => (
                         //if not current habit then class=inactive else class="active currHabit"
-                        <a key={h[0]} className={(h[0] !== currHabit[0] /*&& h[0] !== 0*/) ? "inactive" : "active currHabit"} href={h[0] !== 22 ? "habit?habit_id="+h[0] : "/profile"}>{h[1]}</a> //if 22 is set to 0 then the href for profile will be /profile
+                        <a key={h[0]} className={(h[0] !== currHabit[0] /*&& h[0] !== 0*/) ? "inactive" : "active currHabit"} href={h[0] !== 22 ? "habit?habit_id="+h[0] : "/profile"}>{h[1]}</a> //if 22 is set to 0 then the a[href] for profile will be /profile
                         )
                     )
                 }
