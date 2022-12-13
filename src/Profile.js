@@ -4,6 +4,7 @@ import NavBar from "./NavBar";
 
 
 const userDB = {
+    userId: 1,
     name: "John Cena",
     motto: "You can't see me",
     imgSrc: "https://images.genius.com/b7856ba4b9670f426d8b347b3fc20a52.403x363x1.png"

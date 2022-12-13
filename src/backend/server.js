@@ -1,16 +1,16 @@
 const express = require("express");
-
+const cors = require('cors');
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const app = express();
 const crypto = require("crypto");
-var hash = crypto.createHash('sha256');
-
+const userDB = require('./DB.json');
 const port = process.env.PORT || 3001;
 
-const truePass =  crypto.createHash('sha256').update('root').digest('hex');
-console.log(truePass)
+const {users} = require('./users.json');
+// const truePass =  password;
+// console.log(truePass)
 // const pgp = require("pg-promise")(); //not installed the package yet. so will show error right now
 
 
@@ -44,6 +44,13 @@ console.log(truePass)
 // 	res.json(habit_info);
 // 	});
 app.use(express.json());
+app.use(
+	cors({
+	  origin: ["http://localhost:3000"],
+	  methods: ["GET", "POST"],
+	  credentials: true,
+	})
+  );
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(
@@ -53,7 +60,7 @@ app.use(
 	  resave: false,
 	  saveUninitialized: false,
 	  cookie: {
-		expires: 60 * 1 * 1000, // one day expiry date
+		expires: 60 * 1000 * 1/60 * 5 // one day expiry date
 	  },
 	})
   );
@@ -71,14 +78,20 @@ app.get("/login", (req, res) => {
 
 app.post("/login", (req, res) => {
 	console.log(req.body)
+	var hash = crypto.createHash('sha256');
 	const {username, password} = req.body;
 	passHash = hash.update(password).digest('hex');
-	console.log(passHash)
-	let response = passHash == truePass;
+	// console.log(passHash);
+	console.log("username",username, users[username] !== undefined);
+	console.log("passHash\n",passHash,"\n", users[username].password);
+	let response = (users[username] !== undefined) && (passHash === users[username].password);
+	console.log("response",response);
 	if (response) {
-		req.session.user = username;
+		req.session.user = users[username].userId;
 		console.log(req.session.user);
-		res.send(username);
+		// res.send(userDB[req.session.user])
+		res.redirect("http://localhost:3000/");
+		// res.redirect("http://localhost:3000/");
 	} else {
 		res.send({ message: "Wrong username/password combination!" });
 	}

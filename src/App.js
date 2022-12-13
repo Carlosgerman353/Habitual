@@ -1,42 +1,89 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 // import Button from "./Button.js";
 import "./index.css"; 
 import Rating from "./rate";
 import NavBar from "./NavBar";
 import Profile from "./Profile";
 import CreateNewHabit from "./CreateNewHabit";
+import Homepage from "./Homepage";
 
 
+
+const { users } = require('./backend/users.json');
+// const { }
+// console.log(userId);
+
+const userDB = require('./backend/DB.json');
 var ReactDOM = require('react-dom/client');
 //[habit_id, makeHabit, breakHabit]
-const habitDB = [
-  [100, "Jog everyday", "Daily junk food"],
-  [101, "50 pushups daily", "idling away time"],
-  [102, "3 miles running", "improve cardio endurance"]
-  ];
-  habitDB.push([0, "Profile"]);
 
-  const habitDBJson = {
-    habitId100 : {
-        streak: 0,
-        days: 5
-    },
-    habitId0: {
-      streak:0,
-      days:0
-    }
-  };
-  let i = 101;
-  habitDBJson["habitId"+ i++]  = {streak: 0, days: 5};
-  habitDBJson["habitId"+ i++]  = {streak: 0, days: 5};
+// users[userId].habits.forEac
+// fetch("http://localhost:3001/login")
+//   .then(res => res.json())
+//   .then(d => {
+//     if(!d.loggedIn){
+//       console.log("not logged In");
+//       //redirect to Homepage for login/register
+//     } 
+//   });
 
-let urlParams = new URLSearchParams(document.URL.toString().split("?")[1]);
-const habitInx = habitDB.findIndex(x => x[0] === parseInt(urlParams.get("habit_id")));
-const currHabit1 = habitInx === -1 ? habitDB[0] : habitDB[habitInx];
-
-const cnHabit = urlParams.get("makeHabit");
 function App() {
+  const [userId, setUserId] = useState('');
+  const [loggedIn, setLoggedIn] = useState(false);
+  // useEffect(() => {
+  //   fetch("http://localhost:3001/login")
+  //   .then(res => res.json())
+  //   .then(d => {setUserId(d)});
+  // }, []);
+  useEffect(() => {
+    fetch("http://localhost:3001/login", {
+      'credentials':'include',
+      'method':'GET',
+      'mode':'cors'
+    })
+      .then(res => res.json())
+      .then(d => {
+        if(!d.loggedIn){
+          console.log("d: ", d);
+          console.log("not logged In");
+          setLoggedIn(false);
+          // return (<Homepage />);
+          //redirect to Homepage for login/register
+        }else{
+          console.log("logged in")
+          setLoggedIn(true);
+        }
+      });
+    }, []);
+
+  const habitDB = [
+    [100, "Jog everyday", "Daily junk food"],
+    [101, "50 pushups daily", "idling away time"],
+    [102, "3 miles running", "improve cardio endurance"]
+    ];
+    habitDB.push([0, "Profile"]);
   
+    const habitDBJson = {
+      habitId100 : {
+          streak: 0,
+          days: 5
+      },
+      habitId0: {
+        streak:0,
+        days:0
+      }
+    };
+    let i = 101;
+    habitDBJson["habitId"+ i++]  = {streak: 0, days: 5};
+    habitDBJson["habitId"+ i++]  = {streak: 0, days: 5};
+  
+  let urlParams = new URLSearchParams(document.URL.toString().split("?")[1]);
+  const habitInx = habitDB.findIndex(x => x[0] === parseInt(urlParams.get("habit_id")));
+  const currHabit1 = habitInx === -1 ? habitDB[0] : habitDB[habitInx];
+  
+  const cnHabit = urlParams.get("makeHabit");
+
+
   const [currHabit, setCurrHabit] = useState(currHabit1);
   const [count, setCount] = useState(0); //Streak count 
   var [highestCount, setHighestCount] = useState(0);
@@ -148,6 +195,17 @@ function App() {
       </div>
       );
     }
+  }
+
+  if(!loggedIn && !document.URL.includes("/login")){
+    console.log(loggedIn, document.URL.includes("/login")); 
+    document.location.href = 'http://localhost:3000/login';
+  }
+  if(loggedIn && document.URL.includes("/login")){
+    document.location.href= "http://localhost:3000";
+  }
+  if(document.URL.includes("/login")){
+    return <Homepage />;
   }
   if(newHabit !== null) return <CreateNewHabit makeHabit={newHabit} />;
   if(currHabit1[1].toLowerCase() === "profile") return <Profile />;

@@ -1,0 +1,31 @@
+{
+    "userId1": { 
+        "name": "John Cena",
+        "motto": "You can't see me",
+        "imgSrc": "https://images.genius.com/b7856ba4b9670f426d8b347b3fc20a52.403x363x1.png",
+        "habits": [
+            {
+            "habitId100": {
+                    "makeHabit": "Jog Daily",
+                    "breakHabit": "Break habit",
+                    "progress": 50,
+                    "daysRemaining": 5,
+                    "streak": 0,
+                    "start_date": "2022-12-13",
+                    "end_date": "2022-12-20"
+                }
+            },
+            {
+                "habitId101": {
+                    "makeHabit": "50 pushups daily",
+                    "breakHabit": "Break habit",
+                    "progress": 60,
+                    "daysRemaining": 10,
+                    "streak": 0,
+                    "start_date": "2022-12-13",
+                    "end_date": "2022-12-20"
+                }
+            }
+        ]
+    }
+}
