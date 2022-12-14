@@ -9,6 +9,7 @@ const userDB = require('./DB.json');
 const port = process.env.PORT || 3001;
 
 const {users} = require('./users.json');
+const fs = require("fs");
 // const truePass =  password;
 // console.log(truePass)
 // const pgp = require("pg-promise")(); //not installed the package yet. so will show error right now
@@ -68,7 +69,16 @@ app.get("/login", (req, res) => {
 	  res.send({ loggedIn: false });
 	}
   });
-
+app.post("/createNewHabit", (req, res) => {
+	let {c} = req.body;
+	c = JSON.parse(c);
+	console.log(c);
+	let currObj = {};
+	currObj = JSON.parse(fs.readFileSync('./DB.json', {encoding:'utf8', flag:'r'}));
+	currObj["userId2"].habits = c.habits;
+	fs.writeFileSync('./DB.json', JSON.stringify(currObj), (s) => console.log(s));
+	res.json(currObj);	
+});
 // const sessions = [];
 app.post("/login", (req, res) => {
 	console.log(req.body)
