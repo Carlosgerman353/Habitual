@@ -2,13 +2,24 @@ import React, { useState } from "react";
 import "./index.css"; 
 import createHabit from "./App";
 
-const habitDB = [
-    [100, "Jog everyday", "Daily junk food"],
-    [101, "50 pushups daily", "idling away time"],
-    [102, "3 miles running", "improve cardio endurance"]
-    ];
+// const habitDB = [
+//     [100, "Jog everyday", "Daily junk food"],
+//     [101, "50 pushups daily", "idling away time"],
+//     [102, "3 miles running", "improve cardio endurance"]
+//     ];
 
-  habitDB.push([0, "Profile"]);
+
+// setNavLinks();
+export default function NavBar(props) {
+const userDB = JSON.parse(sessionStorage.getItem('userDB'));
+const habitDB = [];
+userDB.habits.forEach(x => {    
+    for(let i in x){
+        habitDB.push([parseInt(i.split('Id')[1]),
+                    x[i].makeHabit,
+                    x[i].breakHabit]);
+    }
+    });
 
 function openNav() {
     document.getElementById("mySidenav").style.width = "250px";
@@ -25,11 +36,11 @@ const habitInx = habitDB.findIndex(x => x[0] === parseInt(urlParams.get("habit_i
 
 const currHabit1 = (habitInx === -1 ) ? habitDB[0] : habitDB[habitInx]; //stores whatever page we currently on
 
-// setNavLinks();
-export default function NavBar(props) {
 const [navLinks, setNavLinks] = useState(habitDB);
 const [currHabit, setCurrHabit] = useState(currHabit1);
 // const [newHabitInput, setNewHabitInput] = useState(false);
+
+
 
 function addNewTask(){
     // if(!newHabitInput){

@@ -1,7 +1,7 @@
 {
     "userId1": { 
         "name": "John Cena",
-        "motto": "You can't see me",
+        "motto": "You can't see me. 冰淇淋",
         "imgSrc": "https://images.genius.com/b7856ba4b9670f426d8b347b3fc20a52.403x363x1.png",
         "habits": [
             {
@@ -11,8 +11,7 @@
                     "progress": 50,
                     "daysRemaining": 5,
                     "streak": 0,
-                    "start_date": "2022-12-13",
-                    "end_date": "2022-12-20"
+                    "days": 6
                 }
             },
             {
@@ -22,8 +21,74 @@
                     "progress": 60,
                     "daysRemaining": 10,
                     "streak": 0,
-                    "start_date": "2022-12-13",
-                    "end_date": "2022-12-20"
+                    "days": 5
+                }
+            },
+            {
+                "habitId0":{
+                    "makeHabit": "Profile",
+                    "breakHabit": "Break habit",
+                    "progress": 60,
+                    "daysRemaining": 10,
+                    "streak": 0,
+                    "days": 5
+                }
+            },
+            {
+                "habitId999":{
+                    "makeHabit": "Log Out",
+                    "breakHabit": "Break habit",
+                    "progress": 60,
+                    "daysRemaining": 10,
+                    "streak": 0,
+                    "days": 5
+                }
+            }
+        ]
+    },
+    "userId2": { 
+        "name": "Dorjee Lama",
+        "motto": "dedication. hard work.",
+        "imgSrc": "https://images.unsplash.com/photo-1615497001839-b0a0eac3274c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8Y3V0ZSUyMGNhdHxlbnwwfHwwfHw%3D&w=1000&q=80",
+        "habits": [
+            {
+            "habitId100": {
+                    "makeHabit": "100m x 10 dash",
+                    "breakHabit": "No high calorie intake",
+                    "progress": 50,
+                    "daysRemaining": 5,
+                    "streak": 0,
+                    "days": 6
+                }
+            },
+            {
+                "habitId101": {
+                    "makeHabit": "50 pullups daily",
+                    "breakHabit": "utilize upper back more often",
+                    "progress": 40,
+                    "daysRemaining": 10,
+                    "streak": 0,
+                    "days": 5
+                }
+            },
+            {
+                "habitId0":{
+                    "makeHabit": "Profile",
+                    "breakHabit": "Break habit",
+                    "progress": 60,
+                    "daysRemaining": 10,
+                    "streak": 0,
+                    "days": 5
+                }
+            },
+            {
+                "habitId999":{
+                    "makeHabit": "Log Out",
+                    "breakHabit": "Break habit",
+                    "progress": 60,
+                    "daysRemaining": 10,
+                    "streak": 0,
+                    "days": 5
                 }
             }
         ]

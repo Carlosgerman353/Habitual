@@ -36,13 +36,6 @@ const {users} = require('./users.json');
 // 		habit_info.makeHabit = rows;
 // 	}).catch(e => { console.log(e); });
 
-// 	db.any(`SELECT breakHabit FROM habit WHERE habitId = ${habit_id};`)
-// 	.then(rows => {
-// 		habit_info.breakHabit = rows;
-// 	}).catch(e => { console.log(e); });
-	
-// 	res.json(habit_info);
-// 	});
 app.use(express.json());
 app.use(
 	cors({
@@ -60,7 +53,7 @@ app.use(
 	  resave: false,
 	  saveUninitialized: false,
 	  cookie: {
-		expires: 60 * 1000 * 1/60 * 5 // one day expiry date
+		expires: 60 * 1000 * 5 // 5 min expiry date
 	  },
 	})
   );
@@ -76,6 +69,7 @@ app.get("/login", (req, res) => {
 	}
   });
 
+// const sessions = [];
 app.post("/login", (req, res) => {
 	console.log(req.body)
 	var hash = crypto.createHash('sha256');
@@ -87,13 +81,17 @@ app.post("/login", (req, res) => {
 	let response = (users[username] !== undefined) && (passHash === users[username].password);
 	console.log("response",response);
 	if (response) {
-		req.session.user = users[username].userId;
+		let userId = users[username].userId;
+		req.session.user = userId;
 		console.log(req.session.user);
-		// res.send(userDB[req.session.user])
-		res.redirect("http://localhost:3000/");
+		// sessionStorage.setItem("bingchilling","xong");
+		res.json(userDB[req.session.user]);
+		// const state = crypto.randomBytes(20).toString("hex");
+		// sessions.push({state, userId});
+		// res.redirect("http://localhost:3000/");
 		// res.redirect("http://localhost:3000/");
 	} else {
-		res.send({ message: "Wrong username/password combination!" });
+		res.status(403).send({ message: "Wrong username/password combination!" });
 	}
 });
 
